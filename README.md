@@ -5,7 +5,7 @@ Hands-on network security projects I built while studying for the Cisco CCNA. Ea
 | # | Project | Tools | Status |
 |---|---------|-------|--------|
 | 1 | [Secure Small Office Network](01-secure-office/) | Cisco Packet Tracer | In progress |
-| 2 | [Zone-Based ACL Firewall](02-acl-firewall/) | Cisco Packet Tracer | Planned |
+| 2 | [Zone-Based ACL Firewall](02-acl-firewall/) | Cisco Packet Tracer | In progress |
 | 3 | [Site-to-Site IPsec VPN](03-ipsec-vpn/) | Packet Tracer, GNS3 | Planned |
 | 4 | [Attack and Defend Lab](04-attack-defend/) | GNS3, Kali Linux | Planned |
 | 5 | [Python Security Audit Script](05-python-audit/) | Python, Netmiko | Planned |

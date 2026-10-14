@@ -1,0 +1,16 @@
+! ISP - Cisco 2911 - simulated Internet provider (Project 2)
+hostname ISP
+no ip domain-lookup
+!
+interface g0/0
+ description Link to R1 (office)
+ ip address 203.0.113.2 255.255.255.252
+ no shutdown
+interface g0/1
+ description Simulated Internet (Internet-Web 198.51.100.10)
+ ip address 198.51.100.1 255.255.255.0
+ no shutdown
+!
+ip route 192.168.0.0 255.255.0.0 203.0.113.1
+!
+end
