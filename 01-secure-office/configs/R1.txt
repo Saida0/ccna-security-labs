@@ -1,0 +1,66 @@
+! R1 - Cisco 2911 - Secure Small Office Network
+hostname R1
+no ip domain-lookup
+ip domain-name office.lab
+banner motd #Authorised access only. Activity is monitored.#
+enable secret <REDACTED>
+service password-encryption
+security passwords min-length 10
+username admin privilege 15 secret <REDACTED>
+!
+aaa new-model
+aaa authentication login default local
+aaa authorization exec default local
+!
+crypto key generate rsa general-keys modulus 2048
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+login block-for 120 attempts 3 within 60
+!
+ip dhcp excluded-address 192.168.10.1 192.168.10.10
+ip dhcp excluded-address 192.168.20.1 192.168.20.10
+ip dhcp excluded-address 192.168.30.1 192.168.30.10
+ip dhcp pool STAFF
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 8.8.8.8
+ip dhcp pool ADMIN
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 8.8.8.8
+ip dhcp pool GUEST
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1
+ dns-server 8.8.8.8
+!
+interface g0/0
+ no shutdown
+interface g0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+interface g0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+interface g0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.30.1 255.255.255.0
+interface g0/0.99
+ encapsulation dot1Q 99
+ ip address 192.168.99.1 255.255.255.0
+interface g0/0.999
+ encapsulation dot1Q 999 native
+!
+no ip http server
+no cdp run
+!
+line console 0
+ login local
+ exec-timeout 5 0
+ logging synchronous
+line vty 0 15
+ login local
+ transport input ssh
+ exec-timeout 5 0
+!
+end
