@@ -63,7 +63,11 @@ Passwords are redacted.
 | Brute-force login | `login block-for` | Logins blocked for 120 s |
 
 ## What I learned
-<!-- Write 3 to 5 sentences in your own words. What surprised you? What broke and how did you fix it? -->
+- Layer 2 features depend on each other. Dynamic ARP Inspection checks traffic against the DHCP snooping binding table, so snooping has to be working first.
+- Every switch needs to know which ports to trust. The uplinks towards R1 are marked `ip dhcp snooping trust` and `ip arp inspection trust`; without that, the real DHCP offers from the router would be dropped along with the rogue ones.
+- Security is mostly about closing defaults. Moving the native VLAN to 999, turning off DTP with `switchport nonegotiate` and parking unused ports in VLAN 666 removes ways in that are open out of the box.
+- Management access needs its own protection: SSH v2 only on the VTY lines, plus `login block-for 120 attempts 3 within 60` to slow down password guessing.
+- Testing each feature with a matching attack (rogue DHCP server, rogue switch, Telnet) showed me what each command actually does, which reading about it did not.
 
 ## Tools
 Cisco Packet Tracer 8.x, Cisco 2911 router, Cisco 2960 switches
