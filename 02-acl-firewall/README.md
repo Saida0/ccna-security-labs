@@ -78,7 +78,12 @@ Passwords are redacted.
 - **DAI and static IPs:** the server VLAN was kept out of Dynamic ARP Inspection, because a static IP has no DHCP snooping binding.
 
 ## What I learned
-<!-- Write 3 to 5 sentences in your own words. -->
+- Writing the security policy table first made the ACLs much easier. Each row of the table became one or two ACL lines.
+- Order matters: an ACL stops at the first line that matches, so specific permits have to come before broad denies.
+- Every ACL ends with an invisible "deny any". When I removed the DHCP permit from GUEST-IN, guests stopped getting an IP address.
+- Direction matters as much as content. Applying an ACL inbound on the VLAN subinterface filters traffic as close to the source as possible.
+- The `established` keyword lets the server answer requests without being able to start its own connections, which limits the damage if it is ever compromised.
+- A standard ACL on the VTY lines (`access-class MGMT-ACCESS in`) is a simple way to make sure only the Admin VLAN can SSH into the devices.
 
 ## Tools
 Cisco Packet Tracer 8.x, Cisco 2911 routers, Cisco 2960 switches, Server-PT (HTTP, DNS)
